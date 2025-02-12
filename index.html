@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+    *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    }
+    body {
+    background: #b4a9a9;
+    height: 100vh;
+    place-items: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    } 
+    input, button {
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 250px;
+    border-radius: 6px;
+    border: 2px solid #ff002b;
+    }
+    button {
+    background-color: rgb(126, 183, 240);
+    
+    }
+    #result{
+    margin: 10px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+    
+    }
+    </style>
+</head>
+<body>
+    <h2>Кодирование строки</h2>
+    <input type="text" id="data" />  
+    <br>
+    <button id="code">Кодировать</button>
+    <div id="result">Результат</div>
+    <button id="copyBtn" >Скопировать в буфер обмена</button>
+    <script>
+    document.getElementById('code').addEventListener('click', function() {
+        const input = document.getElementById('data').value;
+        const result = encodeString(input);
+        document.getElementById('result').textContent = result;
+        document.getElementById('copyBtn').style.display = 'block';
+    });
+    document.getElementById ('copyBtn').addEventListener('click', function(){
+        const resultText =  document.getElementById('result').textContent;
+        navigator.clipboard.writeText(resultText).then(function(){
+        alert('Результат скопирован в буфер обмена.');
+        }, function(err){
+            alert('Ошибка при копировании текста:', err);
+        });
+    });
+    function encodeString(str) {
+        let encodedString = '';
+        let count = 1;
+        for (let i = 0; i < str.length; i++) {
+        while (i + 1 < str.length && str[i] === str[i+1]){
+            count++;
+            i++;
+        }
+        if (count > 1 ) {
+            encodedString += count + str[i];
+        } else {
+            encodedString += str[i];
+        }
+        count = 1;
+        }
+        return  encodedString;
+    } 
+    </script>
+</body>
+</html>
